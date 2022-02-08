@@ -19,7 +19,7 @@ pipeline {
         }
         stage('testing') {
             steps {
-                echo 'Hello testing'
+                echo 'Hello testing the changes'
             }
         }
     }
