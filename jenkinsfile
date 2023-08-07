@@ -45,11 +45,11 @@ pipeline {
         maven 'Maven'
     }
 
-    environment {
+    //environment {
        // SCANNER_HOME = tool 'sonarScanner'
         //VERACODE_APPLICATION_NAME = 'ServiceNow DevOps App#1'
        // VERACODE_SCANNER_NAME = 'Veracode'
-    } 
+    //} 
 
     stages {
         stage('Build') {
