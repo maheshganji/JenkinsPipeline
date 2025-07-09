@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Main Pipeline') {
+            steps {
+                script {
+                    echo "=== Starting Nested Pipeline ==="
+
+                    stage('Hello') {
+                        echo 'Hello World'
+                    }
+
+                    stage('Build') {
+                        echo 'Hello build'
+                    }
+
+                    stage('Deploy') {
+                        echo 'Hello deploy'
+                    }
+
+                    stage('Testing') {
+                        echo 'Hello testing the changes'
+                    }
+
+                    echo "=== Nested Pipeline Completed ==="
+                }
+            }
+        }
+    }
+}
