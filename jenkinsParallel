@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+        stage('Parallel Execution') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        echo 'Hello build'
+                    }
+                }
+
+                stage('Deploy') {
+                    steps {
+                        echo 'Hello deploy'
+                    }
+                }
+
+                stage('Testing') {
+                    steps {
+                        echo 'Hello testing the changes'
+                    }
+                }
+            }
+        }
+    }
+}
