@@ -19,15 +19,15 @@ stages:
           
           echo 'Hello world'
 
-- stage: Prod
-  pool: server
-  jobs:
-  - job: 'j2'
-    steps:
-      - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-        inputs:
-          connectedServiceName: 'devopseu01-TestProject-ServiceNow DevOps Service Connection'
-          UpstreamJob: 'j1'
+# - stage: Prod
+#   pool: server
+#   jobs:
+#   - job: 'j2'
+#     steps:
+#       - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+#         inputs:
+#           connectedServiceName: 'devopseu01-TestProject-ServiceNow DevOps Service Connection'
+#           UpstreamJob: 'j1'
           
 # #       - task: ServiceNow-DevOps-Server-Get-Change@1
 # #         inputs:
