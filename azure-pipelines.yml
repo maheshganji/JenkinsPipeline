@@ -1,262 +1,38 @@
-# trigger:
-#   branches:
-#     include:
-#     - none
 trigger:
 - main
-# pool: Default
+
+pool:
   vmImage: ubuntu-latest
+
 stages:
+# Build Stage
 - stage: Build
+  displayName: "Build Stage"
   jobs:
-  - job: 'j1'
+  - job: BuildJob
+    displayName: "Build the project"
     steps:
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
-          
-          echo 'Hello world'
+    - script: echo "Building the project..."
+      displayName: "Run build script"
 
-# - stage: Prod
-#   pool: server
-#   jobs:
-#   - job: 'j2'
-#     steps:
-#       - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-#         inputs:
-#           connectedServiceName: 'devopseu01-TestProject-ServiceNow DevOps Service Connection'
-#           UpstreamJob: 'j1'
-          
-# #       - task: ServiceNow-DevOps-Server-Get-Change@1
-# #         inputs:
-# #           connectedServiceName: 'emprpolanki8-SampleProject-ServiceNow DevOps Service Connection'
-# #           projectName: 'SampleProject'
-# #           pipelineName: 'TestingDefect'
-# #           stageName: 'Prod/j2'
-# #           buildNumber: '$(build.buildId)'
-# #           attemptNumber: '$(System.JobAttempt)'
-# #           branchName: 'main'
-# #         name: change1
-      
-# #       - task: ServiceNow-DevOps-Server-Update-Change@1
-# #         inputs:
-# #           connectedServiceName: 'emprpolanki8-SampleProject-ServiceNow DevOps Service Connection'
-# #           changeRequestNumber: $(change1.changeRequestNumber)
-# #           changeRequestDetails: |
-# #             {
-# #             "short_description": "Testing from the pipeline2 ",
-# #             "work_notes": "worknotes update from the pipeline2 ",
-# #             "description": "description update from the pipeline file2"
-            
-# #              }
-      
-      
-# #     # - task: UniversalPackages@0
-# #     #   inputs:
-# #     #     command: 'publish'
-# #     #     publishDirectory: '$(Build.ArtifactStagingDirectory)'
-# #     #     feedsToUsePublish: 'internal'
-# #     #     vstsFeedPublish: '6906fd54-b6e5-4a85-bbaa-4523ec68499b/197c60ab-8938-4dd6-9fe3-6fb8a8a092dd'
-# #     #     vstsFeedPackagePublish: 'sampletest'
-# #     #     versionOption: 'patch'
-# #     # - task: PublishBuildArtifacts@1
-# #     #   inputs:
-# #     #     PathtoPublish: '$(Pipeline.Workspace)'
-# #     #     ArtifactName: 'test'
-# #     #     publishLocation: 'Container'
-# #     # - task: PublishPipelineArtifact@1
-# #     #   inputs:
-# #     #     targetPath: '$(Pipeline.Workspace)'
-# #     #     artifact: 'pipeline-name'
-        
-# #     # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-# #     #   inputs:
-# #     #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-# #     # - task: ServiceNow-DevOps-Agent-Get-Change@1
-# #     #   name: test
-# #     #   inputs:
-# #     #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-# #     #     stageName: 
-# #     #     pipelineName: '$(system.teamProject)/$(build.definitionName)'
-# #     #     buildNumber: '73'
-# #     # - task: ServiceNow-DevOps-Agent-Get-Change@1
-# #     #   inputs:
-# #     #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-# #     #     stageName: 'Prod'
-# #     #     jobName: 'Job_Prod'
-# #     #     projectName: '$(system.teamProject)'
-# #     #     pipelineName: '$(build.definitionName)'
-# #     #     buildNumber: '73'
-# #     #   name: test
-# #     # - task: Bash@3
-# #     #   inputs:
-# #     #     targetType: 'inline'
-# #     #     script: |
-#     #       # Write your commands here
-          
-#     #       echo 'Hello world'+ $(test.changeRequestNumber)
-      
-#     # - script: |
-#     #     echo "The change request number is $(test.changeRequestNumber)"
+# Test Stage
+- stage: Test
+  displayName: "Test Stage"
+  dependsOn: Build
+  jobs:
+  - job: TestJob
+    displayName: "Run tests"
+    steps:
+    - script: echo "Running tests..."
+      displayName: "Run test script"
 
-      
-#     # - task: ServiceNow-DevOps-Agent-Update-Change@1
-#     #   inputs:
-#     #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-#     #     changeRequestNumber: '$(test.changeRequestNumber)'
-#     #     changeRequestDetails: |
-#     #       {
-#     #        "short_description": "Testing from the pipeline1 ",
-#     #        "work_notes": "worknotes update from the pipeline1 ",
-#     #        "description": "description update from the pipeline file1"
-#     #       }
-#     #   name: Update
-#     # - task: Bash@3
-#     #   inputs:
-#     #     targetType: 'inline'
-#     #     script: |
-#     #       # Write your commands here
-          
-#     #       echo 'Hello world'+ $(Update.UpdateChangeStatus)
-# # - stage: Test
-# #   jobs:
-# #   - job: 'j2'
-# #     steps:
-# #     - task: Bash@3
-# #       inputs:
-# #         targetType: 'inline'
-# #         script: |
-# #           # Write your commands here
-# #           echo 'Hello world'
-# #     - task: Bash@3
-# #       inputs:
-# #         targetType: 'inline'
-# #         script: |
-# #           # Write your commands here
-# #           echo 'Hello world12'
-# - stage: test
-#   dependsOn: Prod
-#   jobs:
-#   - job: Job_Get
-#     steps:
-#     - task: ServiceNow-DevOps-Agent-Get-Change@1
-#       inputs:
-#         connectedServiceName: 'emprpolanki8-SampleProject-ServiceNow DevOps Service Connection'
-#         projectName: 'SampleProject'
-#         pipelineName: 'TestingDefect'
-#         stageName: 'Prod/j2'
-#         buildNumber: '$(build.buildId)'
-#         branchName: 'main'
-#       name: change2
-#     - task: ServiceNow-DevOps-Agent-Update-Change@1
-#       inputs:
-#         connectedServiceName: 'emprpolanki8-SampleProject-ServiceNow DevOps Service Connection'
-#         changeRequestNumber: $(change2.changeRequestNumer)
-#         changeRequestDetails: |
-#           {
-#           "short_description": "Updating the short_description",
-#           "work_notes": "updated work notes",
-#           "description": "change description updating"
-#           }
-         
-    
-#   - job: Job_Print
-#     dependsOn: Job_Get
-#     variables:
-#       printNumber: $[ dependencies.Job_Get.outputs['getCr.crNumber'] ] 
-#     steps:
-#       - task: Bash@3
-#         inputs:
-#           targetType: 'inline'
-#           script: |
-#             # Write your commands here  
-#             echo 'Hello world - $(printNumber)'
-      # - task: ServiceNow-DevOps-Server-Get-Test@1
-      #   inputs:
-      #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-      #     stageName: 'Prod/Job_Prod'
-      #     pipelineName: '$(system.teamProject)/$(build.definitionName)'
-      #     buildNumber: '73'
-      #     attemptNumber: '$(system.jobAttempt)'
-      #     branchName: '$(Build.SourceBranchName)'
-      #   name: test3
-      # - task: ServiceNow-DevOps-Server-Update-Change@1
-      #   inputs:
-      #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-      #     changeRequestNumber:  $(test3.outputVariable)
-      #     changeRequestDetails: |
-      #       {
-      #        "short_description": "testing2",
-      #       "work_notes": "testing2"
-      #       }
-
-
-      # - task: Bash@3
-      #   inputs:
-      #     targetType: 'inline'
-      #     script: |
-      #       # Write your commands here
-            
-      #       echo  'The change request number is $(test2.changeRequestNumber)'
-      # - task: Bash@3
-      #   inputs:
-      #     targetType: 'inline'
-      #     script: |
-      #       # Write your commands here
-            
-      #       echo 'The change request number is $(test2.changeRequestNumber2)'
-      
-        # env:
-        #   changeRequestNumber: $[ dependencies.GetChangeRequest.outputs['ServiceNow-DevOps-Server-Get-Change.changeRequestNumber'] ]
-  # - job: Job_Update
-  #   pool: server
-  #   dependsOn: Job_Get
-  #   variables:
-  #     myVarFromJobA: $[ dependencies.Job_Get.outputs['test2.changeRequestNumber'] ] 
-  #   steps:
-  #     - task: ServiceNow-DevOps-Server-Update-Change@1
-  #       inputs:
-  #         connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-  #         changeRequestNumber:  $(myVarFromJobA)
-  #         changeRequestDetails: |
-  #           {
-  #             "short_description": "testing",
-  #           "work_notes": "testing"
-  #           }
-      # - task: ServiceNow-DevOps-Server-Update-Change@1
-      #   inputs:
-      #     connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-      #     changeRequestNumber:  $(test2.changeRequestNumber2)
-      #     changeRequestDetails: |
-      #       {
-      #        "short_description": "testing2",
-      #       "work_notes": "testing2"
-      #       }
-  # - job: Test
-  #   dependsOn: Job_Prod
-  #   steps:
-  #     - task: ServiceNow-DevOps-Agent-Get-Change@1
-  #       name: test
-  #       inputs:
-  #         connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-  #         changeQueryPayload: |
-  #           {
-  #             "stageName": "Prod/Job_Prod"
-  #           }
-  #       env:
-  #         changeRequestNumber2 : "$(changeRequestNumber)"
-          
-  #     - task: ServiceNow-DevOps-Agent-Update-Change@1
-  #       inputs:
-  #         connectedServiceName: 'empmganji12-SampleProject-ServiceNow DevOps Service Connection'
-  #         changeRequestNumber: 'CHG0030033'
-  #         changeRequestDetails: |
-  #           {
-  #                      "short_description": "Testing from the pipeline2 ",
-  #                      "work_notes": "worknotes update from the pipeline2 ",
-  #                      "description": "description update from the pipeline file2"
-  #                     }
-                       
-                
+# Deploy Stage
+- stage: Deploy
+  displayName: "Deploy Stage"
+  dependsOn: Test
+  jobs:
+  - job: DeployJob
+    displayName: "Deploy to environment"
+    steps:
+    - script: echo "Deploying to environment..."
+      displayName: "Run deploy script"
